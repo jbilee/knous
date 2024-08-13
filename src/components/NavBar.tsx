@@ -1,27 +1,21 @@
-"use client";
-
-import { logout } from "@/actions/logout";
-import useSession from "@/hooks/useSession";
 import Link from "next/link";
+import LogoutButton from "./LogoutButton";
+import { getSession } from "@/lib/auth";
 
-export default function NavBar() {
-  const { session, setSession } = useSession();
-  const handleLogout = async () => {
-    await logout();
-    setSession(null);
-  };
+export default async function NavBar() {
+  const userSession = await getSession();
   return (
-    <div className="flex border-b border-b-slate-400 dark:border-b-slate-500 justify-items-center h-24 items-center p-8">
+    <div className="flex h-24 p-8 justify-items-center items-center border-b border-b-slate-400 dark:border-b-slate-500">
       <div>
-        <Link href="/">로고</Link>
+        <Link href="/">KNOU</Link>
       </div>
       <div className="flex gap-7 ml-auto list-none">
-        {session && session.isLoggedIn ? (
+        {userSession.isLoggedIn ? (
           <>
-            <li>마이페이지</li>
-            <li className="cursor-pointer" onClick={handleLogout}>
-              로그아웃
+            <li>
+              <Link href="/account">마이페이지</Link>
             </li>
+            <LogoutButton />
           </>
         ) : (
           <>
