@@ -16,15 +16,15 @@ type CourseDetails = {
   credit: number;
 };
 
-const GRID_ITEM_CLASSES = "flex sm:min-w-60 h-fit items-center gap-4";
-const LABEL_CLASSES = "w-20 px-2 rounded-md text-center text-sm text-white bg-slate-800";
+const GRID_ITEM_CLASSES = "flex sm:min-w-60 h-fit items-center gap-2 sm:gap-4";
+const LABEL_CLASSES = "w-[70px] sm:w-20 sm:px-2 rounded-md text-nowrap text-center text-sm text-white bg-[#1c3d8d] dark:bg-[#1b60c6]";
 
 export default function CourseInfo({ courseData }: CourseInfoProps) {
   return (
     <>
       <div>
         <p className="text-2xl sm:text-3xl font-semibold">{courseData.courseName}</p>
-        <p className="text-lg text-neutral-500">{courseData.departmentName}</p>
+        <p className="text-lg text-slate-500 dark:text-slate-300">{courseData.departmentName}</p>
       </div>
       <Divider />
       <div className="sm:flex sm:justify-between">

@@ -1,7 +1,7 @@
 "use client";
 
-import { type FormEvent } from "react";
-import { Button, TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 type EditReviewFormProps = {
   courseId: string;
@@ -11,7 +11,7 @@ type EditReviewFormProps = {
 };
 
 export default function EditReviewForm({ courseId, oldContent, closeModal, refreshData }: EditReviewFormProps) {
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
@@ -34,7 +34,7 @@ export default function EditReviewForm({ courseId, oldContent, closeModal, refre
   };
 
   return (
-    <form className="flex flex-col gap-4 w-full h-fit" onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-2 w-full h-fit" onSubmit={handleSubmit}>
       <TextField defaultValue={oldContent} name="content" multiline minRows={4} maxRows={10} />
       <div className="self-end">
         <Button onClick={closeModal}>취소</Button>{" "}

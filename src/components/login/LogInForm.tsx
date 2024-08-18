@@ -1,11 +1,12 @@
 "use client";
 
-import { type ChangeEvent, type FormEvent, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Cancel from "@mui/icons-material/Cancel";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Button, FormHelperText, IconButton, TextField } from "@mui/material";
+import { useAuthContext } from "@/hooks/useAuthContext";
 import useForm from "@/hooks/useForm";
 import { login } from "@/actions/login";
 
@@ -15,8 +16,9 @@ export default function LoginForm() {
   const [isCredentialError, setIsCredentialError] = useState(false);
   const [pending, setPending] = useState(false);
   const router = useRouter();
+  const { updateSession } = useAuthContext();
 
-  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     const name = e.target.name;
     updateFormData(name, input);
@@ -26,7 +28,7 @@ export default function LoginForm() {
 
   const clearInput = (key: string) => updateFormData(key, "");
 
-  const handleLogin = async (e: FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setPending(true);
     const loginCredentials = {
@@ -35,6 +37,7 @@ export default function LoginForm() {
     };
     const res = await login(loginCredentials);
     if (res?.isValid) {
+      updateSession({ isLoggedIn: true });
       return router.push("/");
     } else if (res?.errors) {
       updateFormData("username", formData.username.value, true, res?.errors.username && res?.errors.username[0]);

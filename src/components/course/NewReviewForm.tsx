@@ -1,6 +1,7 @@
 "use client";
 
-import { type FormEvent, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import Image from "next/image";
 import { Button, TextField } from "@mui/material";
 import { DraftContext } from "@/contexts/draft/DraftContextProvider";
 import useThrottle from "@/hooks/useThrottle";
@@ -19,7 +20,7 @@ export default function NewReviewForm({ courseId, refreshData }: NewReviewFormPr
     updateDraft(Number(courseId), content);
   }, [throttledValue]);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
@@ -40,8 +41,11 @@ export default function NewReviewForm({ courseId, refreshData }: NewReviewFormPr
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="mt-8 font-bold text-lg">내 리뷰 남기기</h1>
-      <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
+      <div className="mt-8">
+        <Image src="/header-bar.svg" width={42} height={6} alt="수강생 리뷰 구간 표식" />
+        <h1 className="mt-2 font-bold text-lg">내 리뷰 남기기</h1>
+      </div>
+      <form className="flex flex-col gap-2 w-full" onSubmit={handleSubmit}>
         <TextField
           onChange={(e) => setContent(e.target.value)}
           value={content}

@@ -1,6 +1,6 @@
 "use client";
 
-import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import Link from "next/link";
 import Cancel from "@mui/icons-material/Cancel";
 import {
@@ -25,7 +25,7 @@ export default function FindUserForm() {
   const [pending, setPending] = useState(false);
   const [account, setAccount] = useState<string | null>(null);
 
-  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     const name = e.target.name;
     if (name === "confirmationCode") {
@@ -86,7 +86,7 @@ export default function FindUserForm() {
 
   const clearInput = (key: string) => updateFormData(key, "");
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.confirmationCode.value === "")
       return updateFormData("confirmationCode", formData.confirmationCode.value, true, "* 인증번호를 입력해 주세요.");
@@ -159,7 +159,7 @@ export default function FindUserForm() {
                     disabled={isTimerRunning || pendingCode}
                     disableElevation
                   >
-                    {pendingCode ? "발송중..." : isExpiredCode ? "재발송" : "인증번호 발송"}
+                    {isExpiredCode ? "재발송" : "인증번호 발송"}
                   </Button>
                 </InputAdornment>
               }
@@ -177,7 +177,7 @@ export default function FindUserForm() {
           disabled={!isTimerRunning || pending}
           disableElevation
         >
-          {pending ? "..." : "아이디 찾기"}
+          아이디 찾기
         </Button>
       </form>
     </div>

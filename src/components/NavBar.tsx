@@ -1,29 +1,39 @@
+"use client";
+
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
-import { getSession } from "@/lib/auth";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
-export default async function NavBar() {
-  const userSession = await getSession();
+export default function NavBar() {
+  const { session } = useAuthContext();
   return (
-    <div className="flex h-16 sm:h-24 p-4 sm:p-8 justify-items-center items-center border-b border-b-slate-400 dark:border-b-slate-500">
+    <div className="flex h-16 sm:h-24 p-4 sm:p-8 justify-items-center items-center bg-[#1c3d8d] dark:bg-[#1e2e55] text-white dark:text-slate-200">
       <div>
-        <Link href="/">KNOU</Link>
+        <Link href="/" className="orange-link">
+          KNOU
+        </Link>
       </div>
       <div className="flex gap-7 ml-auto list-none">
-        {userSession.isLoggedIn ? (
+        {session.isLoggedIn ? (
           <>
             <li>
-              <Link href="/account">마이페이지</Link>
+              <Link href="/account" className="orange-link">
+                마이페이지
+              </Link>
             </li>
             <LogoutButton />
           </>
         ) : (
           <>
             <li>
-              <Link href="/login">로그인</Link>
+              <Link href="/login" className="orange-link">
+                로그인
+              </Link>
             </li>
             <li>
-              <Link href="/signup">회원가입</Link>
+              <Link href="/signup" className="orange-link">
+                회원가입
+              </Link>
             </li>
           </>
         )}
